@@ -1,3 +1,4 @@
+import { Password } from "../services/password";
 import mongoose from "mongoose";
 
 // An interface that describes the properties that are required to create a new User
@@ -26,6 +27,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+});
+
+userSchema.pre("save", async function (done) {
+  // function keyword works with this keyword here
+  if (this.isModified("password")) {
+    const hashed = await Password.toHash(this.get("password"));
+    this.set("password", hashed);
+  }
+  done();
 });
 
 userSchema.statics.build = (attrs: UserAttrs) => {
