@@ -2,7 +2,7 @@ import "express-async-errors";
 
 import cookieSession from "cookie-session";
 import { currentUserRouter } from "./routes/current-user";
-import { errorHandler } from "./middleware/error-handler";
+import { errorHandler } from "@kanitickets/common";
 import express from "express";
 import { json } from "body-parser";
 import { signinRouter } from "./routes/signin";
