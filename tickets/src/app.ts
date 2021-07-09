@@ -1,9 +1,10 @@
 import "express-async-errors";
 
 import cookieSession from "cookie-session";
-import { errorHandler } from "@kanitickets/common";
+import { errorHandler, currentUser } from "@kanitickets/common";
 import express from "express";
 import { json } from "body-parser";
+import { createTicketRouter } from "./routes/new";
 
 const app = express();
 app.set("trust proxy", true);
@@ -14,6 +15,8 @@ app.use(
     secure: process.env.NODE_ENV !== "test", // https connection
   })
 );
+app.use(currentUser);
+app.use(createTicketRouter);
 
 app.use(errorHandler);
 
